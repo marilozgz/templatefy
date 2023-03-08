@@ -16,7 +16,7 @@ export const Modal = ({ onClose }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex text-center items-center justify-center bg-gray-900 bg-opacity-75">
-      <div className="bg-gray-50 p-8 rounded-lg shadow-lg w-3/6">
+      <div className="bg-gray-50 p-8 rounded-lg shadow-lg sm:w-full md:w-3/6">
         <h2 className="text-2xl font-bold mb-4 text-center ">Pricing</h2>
         <p className="mb-6">
           Upgrade, downgrade or cancel at <span className="font-bold">any time</span>
