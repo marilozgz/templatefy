@@ -130,6 +130,7 @@
   z-index: -1;
 }
 
+
 /* Conic Gradient Animation */
 .thirteen::before {
   animation: 6s rotate linear infinite;
@@ -276,3 +277,4 @@
     transform: rotate(0deg);
   }
 }
+
