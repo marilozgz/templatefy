@@ -1,17 +1,36 @@
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useState, useEffect } from "react";
 
-export default function Pricing() {
-  const { user } = useUser();
+export const Modal = ({ onClose }) => {
+  const [stripeReady, setStripeReady] = useState(false);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://js.stripe.com/v3/pricing-table.js";
+    script.async = true;
+    script.onload = () => setStripeReady(true);
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   return (
-    <div>
-      <h1 className="text-5xl text-bold text-center pt-10">Pricing</h1>
-      <div>
-      <script async src="https://js.stripe.com/v3/pricing-table.js"></script>
-<stripe-pricing-table pricing-table-id="prctbl_1MjJl6LL8utQT13jYHStAuFI"
-publishable-key="pk_live_51Lwq19LL8utQT13jhE31iP4RC7d1inXL9mBF5eARlJRRDcM7j8552VnQZ8MDrvgOKBE3gCvPEbE2jwdHlLwDAV91008duUHIY2">
-</stripe-pricing-table>
+    <div className="fixed inset-0 z-50 flex text-center items-center justify-center bg-gray-900 bg-opacity-75">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-3/6">
+        <h2 className="text-2xl font-bold mb-4 text-center ">Pricing</h2>
+        <p className="mb-6">
+          Upgrade, downgrade or cancel at <span className="font-bold">any time</span>
+        </p>
+        {stripeReady && (
+          <stripe-pricing-table
+            pricing-table-id="prctbl_1MjLq5LL8utQT13jrRenWaiL"
+            publishable-key="pk_live_51Lwq19LL8utQT13jhE31iP4RC7d1inXL9mBF5eARlJRRDcM7j8552VnQZ8MDrvgOKBE3gCvPEbE2jwdHlLwDAV91008duUHIY2"
+          ></stripe-pricing-table>
+        )}
+        <button className="btn btn-secondary mt-5" onClick={onClose}>
+          Close
+        </button>
       </div>
     </div>
   );
-}
+};

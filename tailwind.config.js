@@ -65,20 +65,20 @@ module.exports = {
         ".btn-primary": {
           backgroundColor: "#21E5F2",
           color: "var(--color-myneutral)",
-          borderColor: "var(--color-myprimary)"
+          borderColor: "#FFFFFF"
         },
         ".btn-primary:hover": {
-          backgroundColor: "var(--color-base-200)",
+          backgroundColor: "var(--color-black)",
           color: "black"
         },
         ".btn-secondary": {
           backgroundColor: "#000000",
           color: "white",
-          borderColor: "var(--color-mysecondary)"
+          borderColor: "#000000"
         },
         ".btn-secondary:hover": {
-          backgroundColor: "var(--color-mybase100)",
-          color: "var(--color-mysecondary)"
+          backgroundColor: "#FFF",
+          color: "#000000"
         }
       });
     }
