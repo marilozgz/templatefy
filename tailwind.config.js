@@ -9,19 +9,36 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    theme: {
-      extend: {
-        fontFamily: {
-          nunito: ["Nunito", "sans-serif"]
-        },
+    extend: {
+      fontFamily: {
+        nunito: ["Nunito", "sans-serif"]
       },
+      colors: {
+        primary: '#21E5F2',
+        secondary: '#000000',
+        neutral: '#FFFFFF',
+        myprimary: '#FF5722',
+        mysecondary: '#607D8B',
+        myneutral: '#212121',
+        base: {
+          50: '#F9FAFB',
+          100: '#F3F4F6',
+          200: '#E5E7EB',
+          300: '#D1D5DB',
+          400: '#9CA3AF',
+          500: '#6B7280',
+          600: '#4B5563',
+          700: '#374151',
+          800: '#1F2937',
+          900: '#111827',
+        }
+      }
     },
     variants: {},
     plugins: [
-      require('daisyui'),
-    ],
+      require('daisyui')
+    ]
   },
-  
   plugins: [
     require("daisyui"),
     ({ addUtilities }) => {
@@ -39,33 +56,31 @@ module.exports = {
           borderColor: "var(--color-base-100)",
           textTransform: "none",
           fontSize:"18px"
-        },        
-                
+        },
         ".btn:hover": {
           backgroundColor: "var(--color-myprimary)",
           color: "var(--color-mybase100)",
           borderColor: "var(--color-myprimary)"
         },
-        
         ".btn-primary": {
           backgroundColor: "#21E5F2",
           color: "var(--color-myneutral)",
-          borderColor: "var(--color-myprimary)",
+          borderColor: "var(--color-myprimary)"
         },
         ".btn-primary:hover": {
           backgroundColor: "var(--color-base-200)",
-          color: "black",
+          color: "black"
         },
         ".btn-secondary": {
           backgroundColor: "#000000",
           color: "white",
-          borderColor: "var(--color-mysecondary)",
+          borderColor: "var(--color-mysecondary)"
         },
         ".btn-secondary:hover": {
           backgroundColor: "var(--color-mybase100)",
-          color: "var(--color-mysecondary)",
-        },
+          color: "var(--color-mysecondary)"
+        }
       });
-    },
-  ],
+    }
+  ]
 };

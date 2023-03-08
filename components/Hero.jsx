@@ -91,13 +91,28 @@ export const Hero = () => {
         </div>
         <div className="flex-auto w-full lg:w-1/2">
           <div className="flex flex-col justify-center h-full">
-            <h1 className="text-6xl lg:text-8xl font-normal text-left">Generate a...</h1>
+            <h1 className="text-6xl lg:text-5xl font-normal text-left">Try to Generate a...</h1>
             <h1 id="texto" className="text-4xl lg:text-7xl font-extrabold w-120 text-left">
               _{textoActual.substring(0, letraActual)}
             </h1>
-            <div className="flex space-x-3">
-              <h2 className="text-3xl font-normal mt-6 text-center">...in seconds with AI</h2>
+           
+            <div>
+              <h2 className="text-2xl font-normal mt-6 text-left pt-5">
+                You have one shot for <span className="inline-flex items-center px-3.5 py-0.5 rounded-full text-2xs font-medium bg-green-500 text-white">
+                Free
+              </span> 👉
+              </h2>
+              <div className="mt-2 flex items-center">
+              <span className="text-3xl mr-2 flex items-center pt-">
+                <p className="fas fa-star">⭐</p>
+                <p className="fas fa-star">⭐</p>
+                <p className="fas fa-star">⭐</p>
+                <p className="fas fa-star">⭐</p>
+                <p className="fas fa-star">⭐</p>
+              </span>
             </div>
+            </div>
+
           </div>
         </div>
       </div>
