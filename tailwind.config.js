@@ -21,7 +21,7 @@ module.exports = {
         mysecondary: '#607D8B',
         myneutral: '#212121',
         base: {
-          50: '#F9FAFB',
+          50: '#F8F9FC',
           100: '#F3F4F6',
           200: '#E5E7EB',
           300: '#D1D5DB',
