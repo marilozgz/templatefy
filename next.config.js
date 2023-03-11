@@ -5,7 +5,7 @@ const nextConfig = {
     domains: ["lh3.googleusercontent.com"],
   },
   env: {
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY
   },
 };
 
