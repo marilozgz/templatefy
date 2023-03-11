@@ -26,7 +26,7 @@ export const Emails = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+        'Authorization': `Bearer ${API_KEY}`,
       },
       body: JSON.stringify({
         prompt: prompt,
