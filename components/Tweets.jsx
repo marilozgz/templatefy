@@ -12,7 +12,6 @@ export const Tweets = () => {
 
   const handleGenerarClick = async () => {
     setIsLoading(true);
-    const API_KEY = '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';
     const prompt = `Please write a tweet, in the language introduced, in base to "${texto}" and provide more details if necessary.`;
     const model = "text-davinci-003";
     const maxTokens = 280;
@@ -26,7 +25,7 @@ export const Tweets = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${API_KEY}`,
+          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
         },
         body: JSON.stringify({
           prompt: prompt,
