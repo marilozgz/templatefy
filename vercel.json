@@ -3,6 +3,6 @@
       "env": {
         "NODE_OPTIONS": "--max-old-space-size=8192"
       },
-      "timeout": 300000
+      "timeout": 300001
     }
   }
