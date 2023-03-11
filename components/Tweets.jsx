@@ -1,31 +1,28 @@
-import React, { useState, useRef } from 'react';
-import { faCopy } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useState, useRef } from "react";
+import { faCopy } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const Tweets = () => {
-  const [tweet, setTweet] = useState('');
+  const [tweet, setTweet] = useState("");
   const [tweets, setTweets] = useState([]);
 
-  const [texto, setTexto] = useState('');
+  const [texto, setTexto] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const textareaRef = useRef(null);
+  const maxTokens = 280;
+  const n = 3; // Genera 3 tweets para el hilo
+  const stop = "";
+  const temperature = 0.7;
 
-  const handleGenerarClick = async () => {
+  const getResponseFromOpenAI = async () => {
     setIsLoading(true);
     const prompt = `Please write a tweet, in the language introduced, in base to "${texto}" and provide more details if necessary.`;
-    const model = "text-davinci-003";
-    const maxTokens = 280;
-    const n = 3; // Genera 3 tweets para el hilo
-    const stop = "";
-    const temperature = 0.7;
-    const tweetsArr = [];
-  
+
     for (let i = 0; i < n; i++) {
-      const response = await fetch(`https://api.openai.com/v1/engines/${model}/completions`, {
-        method: 'POST',
+      const response = await fetch("/api/openai", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           prompt: prompt,
@@ -35,22 +32,24 @@ export const Tweets = () => {
           temperature: temperature,
         }),
       });
-  
+
       const data = await response.json();
-      const suggestion = data.choices[0].text.toString();
-      tweetsArr.push(suggestion);
+      const suggestion = data.text;
+      tweets.push(suggestion);
     }
-  
-    setTweets(tweetsArr);
+
+    setTweets(tweets);
     setIsLoading(false);
   };
-  
+
   const handleTweetThread = () => {
-    let tweetThread = tweets.join('\n\n'); // Junta los tweets con dos saltos de línea
-    tweetThread = encodeURIComponent(tweetThread);
-    window.open(`https://twitter.com/intent/tweet?text=${tweetThread}`);
+    if (tweets.length > 0) {
+      let tweetThread = tweets.join("\n\n"); // Junta los tweets con dos saltos de línea
+      tweetThread = encodeURIComponent(tweetThread);
+      window.open(`https://twitter.com/intent/tweet?text=${tweetThread}`);
+    }
   };
-  
+
   const handleCopyClick = () => {
     textareaRef.current.select();
     document.execCommand("copy");
@@ -61,7 +60,7 @@ export const Tweets = () => {
   };
 
   const handleResetClick = () => {
-    setTweet('');
+    setTweet("");
   };
   return (
     <div className="hero h-auto justify-left flex-col mt-5">
@@ -73,7 +72,9 @@ export const Tweets = () => {
                 {isLoading && <p>Loading...</p>}
                 <textarea
                   ref={textareaRef}
-                  className={`text-lg md:text-xl textarea h-56 sm:h-80 w-full border-4 border-black rounded-lg p-4 shadow-xl resize-none bg-white ${isLoading && 'opacity-50'}`}
+                  className={`text-lg md:text-xl textarea h-56 sm:h-80 w-full border-4 border-black rounded-lg p-4 shadow-xl resize-none bg-white ${
+                    isLoading && "opacity-50"
+                  }`}
                   placeholder="Write your tweet here"
                   disabled={isLoading}
                   value={texto}
@@ -83,17 +84,19 @@ export const Tweets = () => {
                   <button
                     className="btn btn-secondary text-sm mr-2 mt-4"
                     disabled={isLoading}
-                    onClick={handleGenerarClick}
+                    onClick={getResponseFromOpenAI}
                   >
-                    {isLoading ? 'Generating...' : 'Generate'}
+                    {isLoading ? "Generating..." : "Generate"}
                   </button>
                 </div>
               </div>
               <div className="flex-1 mt-10 sm:mt-0">
                 <textarea
-                  className={`text-lg md:text-xl textarea h-56 sm:h-80 w-full border-4 border-black rounded-lg p-4 shadow-xl resize-none bg-white ${isLoading && 'opacity-50'}`}
+                  className={`text-lg md:text-xl textarea h-56 sm:h-80 w-full border-4 border-black rounded-lg p-4 shadow-xl resize-none bg-white ${
+                    isLoading && "opacity-50"
+                  }`}
                   placeholder="Tweet suggestion"
-                  value={tweet}
+                  value={tweets.join("\n\n")}
                   readOnly
                 />
                 <div className="mt-4 flex justify-between items-center">
@@ -106,7 +109,10 @@ export const Tweets = () => {
                       rel="noopener noreferrer"
                       className="btn btn-primary text-sm"
                     >
-                      <FontAwesomeIcon icon={['fab', 'twitter']} className="mr-2" />
+                      <FontAwesomeIcon
+                        icon={["fab", "twitter"]}
+                        className="mr-2"
+                      />
                       Tweet
                     </a>
                   )}
@@ -134,4 +140,4 @@ export const Tweets = () => {
       </div>
     </div>
   );
-                  };  
+};
