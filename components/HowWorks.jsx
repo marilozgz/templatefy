@@ -3,7 +3,7 @@ import Image from "next/image";
 export const HowWorks = () => {
   return (
     <>
-      <div className="hero pt-20 w-full mt-20">
+      <div className="hero pt-20 w-full mt-10">
         <div className="mx-auto max-w-screen-lg px-12 flex flex-col lg:flex-col justify-items-start w-90">
           <div>
             <h1 className="text-5xl text-bold text-center">How it works?</h1>

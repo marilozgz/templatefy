@@ -21,7 +21,7 @@ module.exports = {
         mysecondary: '#607D8B',
         myneutral: '#212121',
         base: {
-          50: '#F8F9FC',
+          50: '#21E5F2',
           100: '#F3F4F6',
           200: '#E5E7EB',
           300: '#D1D5DB',
@@ -31,56 +31,89 @@ module.exports = {
           700: '#374151',
           800: '#1F2937',
           900: '#111827',
-        }
-      }
+        },
+        daisy: {
+          50: '#F4F5F7',
+          100: '#E8EAED',
+          200: '#C9CCD4',
+          300: '#A9ADB9',
+          400: '#6B7280',
+          500: '#2D3748',
+          600: '#1D2939',
+          700: '#111827',
+          800: '#0C1723',
+          900: '#070E16',
+          accent: '#7F5AF0',
+          success: '#22C55E',
+          warning: '#F9C74F',
+          error: '#EF4444',
+          info: '#00B4D8',
+        },
+      },
     },
-    variants: {},
-    plugins: [
-      require('daisyui')
-    ]
   },
   plugins: [
     require("daisyui"),
     ({ addUtilities }) => {
       addUtilities({
+        ".tab-custom":{
+          borderRadius: '50px',
+          fontWeight: 'bold',
+          fontSize: '1rem',
+          lineHeight: "0.2rem",
+          padding: '1rem 2rem',
+          backgroundColor: '#F4F5F7',
+          color: 'black',
+          cursor: 'pointer',
+          border:"1px solid #000",
+          margin: "0.15rem 1rem",
+          
+          
+        },
+        ".tab-custom:hover": {
+          backgroundColor: '#21E5F2',
+        },
+        ".tab-custom-active": {
+          backgroundColor: '#21E5F2',
+        },
         ".btn": {
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
-          padding: ".5rem 1rem",
-          fontSize: "1rem",
-          lineHeight: "1.5",
-          borderRadius: "300px",
+          padding: "0.75rem 1rem",
+          fontSize: "1.2rem",
+          lineHeight: "1.2",
+          borderRadius: "50px",
           cursor: "pointer",
-          transition: "background-color 0.15s, color 0.15s",
-          borderColor: "var(--color-base-100)",
-          textTransform: "none",
-          fontSize:"18px"
+          fontWeight: "bold",
+          outline: "none",
+          border: "none",
+          textTransform: "none"
+          
         },
-        ".btn:hover": {
-          backgroundColor: "var(--color-myprimary)",
-          color: "var(--color-mybase100)",
-          borderColor: "var(--color-myprimary)"
-        },
+        
         ".btn-primary": {
           backgroundColor: "#21E5F2",
           color: "var(--color-myneutral)",
-          borderColor: "#FFFFFF"
+          borderColor: "2px solid #FFFFFF",
         },
         ".btn-primary:hover": {
-          backgroundColor: "var(--color-black)",
-          color: "black"
+          backgroundColor: "#FFFFFF",
+          color: "black",
+          borderColor: "2px solid #000000",
         },
         ".btn-secondary": {
           backgroundColor: "#000000",
           color: "white",
-          borderColor: "#000000"
+          
         },
         ".btn-secondary:hover": {
           backgroundColor: "#FFF",
-          color: "#000000"
+          color: "black",
+          border: "2px solid #000000",
         }
+      
       });
     }
-  ]
-};
+  ],
+}

@@ -1,13 +1,39 @@
 import Head from 'next/head'
 import { Nunito } from '@next/font/google'
-import {Navbar} from '@/components/Navbar'
+import { useState } from 'react'
+import { Navbar } from '@/components/Navbar'
 import { Hero } from '@/components/Hero'
 import { HowWorks } from '@/components/HowWorks'
 import { Result } from '@/components/Result'
 import { Footer } from '@/components/Footer'
+import { Emails } from '@/components/Emails'
+import { Slides } from '@/components/Slides'
+import { Tweets } from '@/components/Tweets'
+import { Instagram } from '@/components/Instagram'
+import { Tabs } from '@/components/Tabs'
+
+
 const nunito = Nunito({ subsets: ['latin'] })
 
 export default function Home() {
+  const [activeTab, setActiveTab] = useState('emails');
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
+
+  let activeComponent;
+
+  if (activeTab === 'emails') {
+    activeComponent = <Emails />;
+  } else if (activeTab === 'slides') {
+    activeComponent = <Slides />;
+  } else if (activeTab === 'tweets') {
+    activeComponent = <Tweets />;
+  } else if (activeTab === 'instagram') {
+    activeComponent = <Instagram />;
+  }
+
   return (
     <>
       <Head>
@@ -16,13 +42,14 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main >
-       
+      <main>
         <Navbar />
         <Hero />
-        <HowWorks/>
-        <Result/>
-        <Footer/>
+        <Tabs activeTab={activeTab} handleTabClick={handleTabClick} />
+        {activeComponent}
+        <HowWorks />
+        <Result />
+        <Footer />
       </main>
     </>
   )
