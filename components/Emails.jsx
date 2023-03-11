@@ -35,6 +35,7 @@ export const Emails = () => {
 
     const data = await response.json();
     setIsLoading(false);
+    console.log(data);
     setEmailSugerido(data.text);
   };
 
