@@ -87,16 +87,19 @@ export const Emails = () => {
               Reset all
             </button>
             {emailSugerido.length > 0 && (
-              <div className="relative">
-                <button
-                  className="btn btn-link text-sm"
-                  onClick={handleCopyClick}
-                  disabled={isTextareaEmpty}
-                >
-                  <FontAwesomeIcon icon={faCopy} className="mr-2" /> Copy
-                </button>
-                {tooltipVisible && <div>Copied!</div>}
-              </div>
+             <div className="ml-auto relative">
+    <button
+      className="btn btn-link text-sm"
+      disabled={isLoading || !texto}
+      onClick={handleCopyClick}
+    >
+      <FontAwesomeIcon icon={faCopy} className="mr-2" />
+      Copy
+    </button>
+    <div className={`absolute left-0 bottom-full mb-2 p-2 rounded-md bg-gray-700 text-white ${tooltipVisible ? "opacity-100" : "opacity-0"} transition-opacity duration-500 ease-in-out`} style={{ zIndex: 999 }}>
+      Copied!
+    </div>
+  </div>
             )}
           </div>
         </div>
