@@ -1,4 +1,4 @@
-import { Modal } from "@/components/Pricing";
+import { Modal } from "@/components/Modal";
 
 import { Srtipe, Stripe } from "@/components/Stripe";
 

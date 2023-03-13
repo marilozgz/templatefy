@@ -43,7 +43,7 @@ module.exports = {
           700: '#111827',
           800: '#0C1723',
           900: '#070E16',
-          accent: '#7F5AF0',
+          accent: '#21E5F2',
           success: '#22C55E',
           warning: '#F9C74F',
           error: '#EF4444',
@@ -61,28 +61,30 @@ module.exports = {
           fontWeight: 'bold',
           fontSize: '1rem',
           lineHeight: "0.2rem",
-          padding: '1rem 2rem',
+          padding: '0.1rem 2rem',
           backgroundColor: '#F4F5F7',
           color: 'black',
           cursor: 'pointer',
           border:"1px solid #000",
           margin: "0.15rem 1rem",
-          
+          display: "flex",
           
         },
         ".tab-custom:hover": {
           backgroundColor: '#21E5F2',
         },
         ".tab-custom-active": {
-          backgroundColor: '#21E5F2',
-        },
+          backgroundColor: '#000000',
+          color: 'white'
+        },        
+        
         ".btn": {
           display: "inline-flex",
           alignItems: "center",
           justifyContent: "center",
           padding: "0.75rem 1rem",
           fontSize: "1.2rem",
-          lineHeight: "1.2",
+          lineHeight: "1.4",
           borderRadius: "50px",
           cursor: "pointer",
           fontWeight: "bold",
@@ -91,6 +93,11 @@ module.exports = {
           textTransform: "none"
           
         },
+        ".btn:hover": {
+          border: "2px solid #000000",
+          lineHeight: "1.3",
+        },
+        
         
         ".btn-primary": {
           backgroundColor: "#21E5F2",
@@ -100,7 +107,7 @@ module.exports = {
         ".btn-primary:hover": {
           backgroundColor: "#FFFFFF",
           color: "black",
-          borderColor: "2px solid #000000",
+         
         },
         ".btn-secondary": {
           backgroundColor: "#000000",
@@ -110,9 +117,15 @@ module.exports = {
         ".btn-secondary:hover": {
           backgroundColor: "#FFF",
           color: "black",
-          border: "2px solid #000000",
+         
+        }, 
+        ".btn-link": {
+          backgroundColor: "none",
+          color: "#000000",
+          border: "none",
+          textDecoration: "none",
+          
         }
-      
       });
     }
   ],

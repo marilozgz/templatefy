@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { Nunito } from '@next/font/google'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Navbar } from '@/components/Navbar'
 import { Hero } from '@/components/Hero'
 import { HowWorks } from '@/components/HowWorks'
@@ -20,7 +20,15 @@ export default function Home() {
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    window.sessionStorage.setItem('activeTab', tab);
   };
+
+  useEffect(() => {
+    const storedTab = window.sessionStorage.getItem('activeTab');
+    if (storedTab) {
+      setActiveTab(storedTab);
+    }
+  }, []);
 
   let activeComponent;
 
@@ -43,14 +51,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        
         <Navbar />
         <Hero />
-        <Tabs activeTab={activeTab} handleTabClick={handleTabClick} />
-        {activeComponent}
+        <div className="tabs-container">
+          <Tabs activeTab={activeTab} handleTabClick={handleTabClick} />
+          {activeComponent}
+        </div>
         <HowWorks />
         <Result />
         <Footer />
       </main>
+     
     </>
   )
 }
