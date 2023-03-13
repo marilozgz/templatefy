@@ -55,7 +55,7 @@ export const Navbar = () => {
 
 <style jsx>{`
   .gradient-bg {
-    background-image: linear-gradient(90deg, #ffff80, #21E5F2);
+    background-image: linear-gradient(90deg, #ffff80, #FF30EA);
     background-size: 200%;
     transition: background-position 0.5s ease;
   }
