@@ -59,73 +59,72 @@ export const Emails = () => {
 
   return (
     <div className="hero h-auto justify-left flex-col mt-5">
-    <div className="hero-content flex-col-reverse w-screen lg:flex-row-reverse h-fit flex-col">
-      <div className="flex-auto w-full lg:w-1/2">
-        <div className="flex flex-col justify-center h-full">
-          <div className="relative">
-            {isLoading && (
-               <div className="absolute inset-0 bg-gray-200 opacity-50 flex items-center justify-center">
-               <FontAwesomeIcon icon={faSpinner} spin /> Loading...
-             </div>
-            )}
-            <textarea
-              ref={textareaRef}
-              className={`text-lg md:text-xl textarea h-56 sm:h-80 w-full border-4 border-black rounded-lg p-4 shadow-xl resize-none bg-white ${
-                isLoading && "opacity-50"
-              }`}
-              placeholder="Email suggestion"
-              value={emailSugerido}
-              readOnly
-            />
+      <div className="hero-content flex-col-reverse w-screen lg:flex-row-reverse h-fit flex-col">
+        <div className="flex-auto w-full lg:w-1/2">
+          <div className="flex flex-col justify-center h-full">
+            <div className="relative">
+              {isLoading && (
+                <div className="absolute inset-0 bg-gray-200 opacity-50 flex items-center justify-center">
+                  <FontAwesomeIcon icon={faSpinner} spin /> Loading...
+                </div>
+              )}
+              <textarea
+                ref={textareaRef}
+                className={`text-lg md:text-xl textarea h-56 sm:h-80 w-full border-4 border-black rounded-lg p-4 shadow-xl resize-none bg-white ${isLoading && "opacity-50"
+                  }`}
+                placeholder="Email suggestion"
+                value={emailSugerido}
+                readOnly
+              />
+            </div>
+            <div className="flex justify-between">
+              <button
+                className="btn btn-link text-sm"
+                onClick={handleResetClick}
+                disabled={!texto}
+              >
+                Reset all
+              </button>
+              {emailSugerido.length > 0 && (
+                <div className="ml-auto relative">
+                  <button
+                    className="btn btn-link text-sm"
+                    disabled={isLoading || !texto}
+                    onClick={handleCopyClick}
+                  >
+                    <FontAwesomeIcon icon={faCopy} className="mr-2" />
+                    Copy
+                  </button>
+                  <div className={`absolute left-0 bottom-full mb-2 p-2 rounded-md bg-gray-700 text-white ${tooltipVisible ? "opacity-100" : "opacity-0"} transition-opacity duration-500 ease-in-out`} style={{ zIndex: 999 }}>
+                    Copied!
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-          <div className="flex justify-between">
+        </div>
+        <div className="flex-0 h-auto lg:h-96 w-full lg:w-1/2 mx-auto relative flex items-center mt-5 lg:mt-0">
+          <div className="flex-1 relative w-full">
+            <textarea
+              className={`text-lg md:text-xl textarea h-56 sm:h-80 w-full border-4 border-black rounded-lg p-4 shadow-xl resize-none bg-white ${isLoading && "opacity-50"
+                }`}
+              placeholder="e.g.: Write an email with the excuse that I can't attend tomorrow's meeting"
+              value={texto}
+              onChange={handleTextoChange}
+              onBlur={(e) => setIsTextareaEmpty(e.target.value === "")}
+              onFocus={() => setIsTextareaEmpty(false)}
+            />
             <button
-              className="btn btn-link text-sm"
-              onClick={handleResetClick}
+              className="btn btn-primary text-sm mt-2 self-start"
+              onClick={getResponseFromOpenAI}
               disabled={!texto}
             >
-              Reset all
+              {isLoading ? "Generating..." : "Generate"}
             </button>
-            {emailSugerido.length > 0 && (
-             <div className="ml-auto relative">
-    <button
-      className="btn btn-link text-sm"
-      disabled={isLoading || !texto}
-      onClick={handleCopyClick}
-    >
-      <FontAwesomeIcon icon={faCopy} className="mr-2" />
-      Copy
-    </button>
-    <div className={`absolute left-0 bottom-full mb-2 p-2 rounded-md bg-gray-700 text-white ${tooltipVisible ? "opacity-100" : "opacity-0"} transition-opacity duration-500 ease-in-out`} style={{ zIndex: 999 }}>
-      Copied!
-    </div>
-  </div>
-            )}
           </div>
         </div>
       </div>
-      <div className="flex-0 h-auto lg:h-96 w-full lg:w-1/2 mx-auto relative flex items-center mt-5 lg:mt-0">
-        <div className="flex-1 relative w-full">
-          <textarea
-            className={`text-lg md:text-xl textarea h-56 sm:h-80 w-full border-4 border-black rounded-lg p-4 shadow-xl resize-none bg-white ${
-              isLoading && "opacity-50"
-            }`}
-            placeholder="e.g.: Write an email with the excuse that I can't attend tomorrow's meeting"
-            value={texto}
-            onChange={handleTextoChange}
-            onBlur={(e) => setIsTextareaEmpty(e.target.value === "")}
-            onFocus={() => setIsTextareaEmpty(false)}
-          />
-          <button
-            className="btn btn-primary text-sm mt-2 self-start"
-            onClick={getResponseFromOpenAI}
-            disabled={!texto}
-          >
-            {isLoading ? "Generating..." : "Generate"}
-          </button>
-        </div>
-      </div>
     </div>
-  </div>
-  
-  );};    
+
+  );
+};    

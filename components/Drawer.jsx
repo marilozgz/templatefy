@@ -33,7 +33,7 @@ export const Drawer = () => {
               <a
                 onClick={() => handleTabClick('profile')}
                 className={activeTab === 'profile' ? 'active' : ''}
-                style={{ backgroundColor: activeTab === 'profile' ? '#c0c7c9' : 'transparent' }}
+                style={{ backgroundColor: activeTab === 'profile' ? '#000000' : 'transparent' }}
               >
                 My profile
               </a>
@@ -42,7 +42,7 @@ export const Drawer = () => {
               <a
                 onClick={() => handleTabClick('billing')}
                 className={activeTab === 'billing' ? 'active' : ''}
-                style={{ backgroundColor: activeTab === 'billing' ? '#c0c7c9' : 'transparent' }}
+                style={{ backgroundColor: activeTab === 'billing' ? '#000000' : 'transparent' }}
               >
                 Billing
               </a>
