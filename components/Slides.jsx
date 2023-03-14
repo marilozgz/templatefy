@@ -16,8 +16,6 @@ export const Slides = () => {
     }
   };
 
-  
-
   const handleGenerarClick = () => {
     if (texto.trim() === '') {
       setError(true);
