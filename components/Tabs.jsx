@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSlideshare, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope } from '@fortawesome/free-solid-svg-icons';
+import { faTwitter} from '@fortawesome/free-brands-svg-icons';
+import { faEnvelope, faInbox, faImage} from '@fortawesome/free-solid-svg-icons';
+
 export const Tabs = ({ activeTab, handleTabClick }) => {
   return (
     <div className="mt-10">
@@ -20,11 +21,10 @@ export const Tabs = ({ activeTab, handleTabClick }) => {
           onClick={() => handleTabClick("slides")}
         >
           <div className="flex items-center">
-            <FontAwesomeIcon icon={faSlideshare} className="mr-2" />
+            <FontAwesomeIcon icon={faImage} className="mr-2" />
             <span className="tab-text">Slides</span>
           </div>
         </a>
-
         <a
           className={`tab tab-custom ${activeTab === "tweets" ? "tab-custom-active" : ""}`}
           onClick={() => handleTabClick("tweets")}
@@ -34,16 +34,17 @@ export const Tabs = ({ activeTab, handleTabClick }) => {
             <span className="tab-text">Tweets</span>
           </div>
         </a>
-
+        
         <a
-          className={`tab tab-custom ${activeTab === "instagram" ? "tab-custom-active" : ""}`}
-          onClick={() => handleTabClick("instagram")}
+          className={`tab tab-custom ${activeTab === "mailing" ? "tab-custom-active" : ""}`}
+          onClick={() => handleTabClick("mailing")}
         >
           <div className="flex items-center">
-            <FontAwesomeIcon icon={faInstagram} className="mr-2" />
-            <span className="tab-text">Instagram</span>
+            <FontAwesomeIcon icon={faInbox} className="mr-2" />
+            <span className="tab-text">Mailing</span>
           </div>
         </a>
+
       </div>
       <style jsx>{`
         .tabs {

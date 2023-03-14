@@ -3,15 +3,14 @@ import { Nunito } from '@next/font/google'
 import { useState, useEffect } from 'react'
 import { Navbar } from '@/components/Navbar'
 import { Hero } from '@/components/Hero'
-import { HowWorks } from '@/components/HowWorks'
-import { Result } from '@/components/Result'
-import { Footer } from '@/components/Footer'
+import { Tabs } from '@/components/Tabs'
 import { Emails } from '@/components/Emails'
 import { Slides } from '@/components/Slides'
 import { Tweets } from '@/components/Tweets'
-import { Instagram } from '@/components/Instagram'
-import { Tabs } from '@/components/Tabs'
-
+import { Mailing } from '@/components/Mailing'
+import { HowWorks } from '@/components/HowWorks'
+import { Result } from '@/components/Result'
+import { Footer } from '@/components/Footer'
 
 const nunito = Nunito({ subsets: ['latin'] })
 
@@ -36,10 +35,10 @@ export default function Home() {
     activeComponent = <Emails />;
   } else if (activeTab === 'slides') {
     activeComponent = <Slides />;
-  } else if (activeTab === 'tweets') {
+  }else if (activeTab === 'tweets') {
     activeComponent = <Tweets />;
-  } else if (activeTab === 'instagram') {
-    activeComponent = <Instagram />;
+  } else if (activeTab === 'mailing') {
+    activeComponent = <Mailing />;
   }
 
   return (

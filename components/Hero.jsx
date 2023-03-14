@@ -5,7 +5,7 @@ export const Hero = () => {
         <div className="flex flex-col mt-0 pt-8">
           <div>
             <h1 className="text-3xl">
-              Generate templates for:
+              Generate templates with AI for:
             </h1>
           </div>   
         </div>   

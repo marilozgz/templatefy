@@ -17,7 +17,7 @@ export const Tweets = () => {
     setIsLoading(true);
     const prompt = `Please write a tweet, in the language introduced, in base to "${texto}" and provide more details if necessary.`;
   
-    const response = await fetch("/api/openai", {
+    const response = await fetch("/api/openai/text", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

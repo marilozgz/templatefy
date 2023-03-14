@@ -34,7 +34,7 @@ module.exports = {
         },
         daisy: {
           50: '#F4F5F7',
-          100: '#E8EAED',
+          100: '#F3F4F6',
           200: '#C9CCD4',
           300: '#A9ADB9',
           400: '#6B7280',

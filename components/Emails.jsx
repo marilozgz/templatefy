@@ -22,7 +22,7 @@ export const Emails = () => {
     setIsLoading(true);
     const prompt = `Please write an email, in the language introduced, in base to "${texto}"  and provide more details such as the recipient, the purpose of the email, etc.`;
 
-    const response = await fetch("/api/openai", {
+    const response = await fetch("/api/openai/text", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,9 +64,9 @@ export const Emails = () => {
         <div className="flex flex-col justify-center h-full">
           <div className="relative">
             {isLoading && (
-              <div className="absolute inset-0 bg-gray-200 opacity-50 flex items-center justify-center">
-                <i className="fas fa-spinner fa-spin"></i> Loading...
-              </div>
+               <div className="absolute inset-0 bg-gray-200 opacity-50 flex items-center justify-center">
+               <FontAwesomeIcon icon={faSpinner} spin /> Loading...
+             </div>
             )}
             <textarea
               ref={textareaRef}
