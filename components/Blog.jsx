@@ -13,7 +13,7 @@ const callOpenAITextAPI = async (prompt, n, stop, temperature) => {
     },
     body: JSON.stringify({
       prompt: prompt,
-      max_tokens: 500,
+      max_tokens: 1024,
       n: n,
       stop: stop,
       temperature: temperature,
@@ -24,7 +24,7 @@ const callOpenAITextAPI = async (prompt, n, stop, temperature) => {
   return data.text;
 };
 
-export const Mailing = () => {
+export const Blog = () => {
   const [texto, setTexto] = useState("");
   const [emailSugerido, setEmailSugerido] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -48,17 +48,21 @@ export const Mailing = () => {
 
   const getResponseFromOpenAI = async () => {
     setIsLoading(true);
-    const prompt = `Compose an email based on the input text '${texto}' and in the same language introduced. 
-      Include additional details such as the recipient, the purpose of the email, and any other relevant information. 
-      The email must be with html structure (spaces) and use Arial font. 
-      Ensure there are no extra spaces at the top of the email.
-      And add small images related from unsplash
+    const prompt = `Compose an article based on the input text '${texto}' and in the same language introduced. 
+      Include additional details such as why you are writing this, the purpose of the post, and any other relevant information. 
+      The article must be with html structure (spaces) and use Arial font. 
+      Ensure there are no extra spaces at the top of the article.
+      And add small images related from Unsplash
     `;
+  
+    // Obtener una imagen aleatoria de Unsplash
+    const response = await fetch('/api/openai/image');
+    const data = await response.json();
+    const imageUrl = data.urls.small;
   
     const dataText = await callOpenAITextAPI(prompt, n, stop, temperature);
     setIsLoading(false);
-  
-    // Agregar la etiqueta <img> con la URL de la imagen
+
     const emailHtml = `
       <html>
         <head>
@@ -67,13 +71,16 @@ export const Mailing = () => {
           </style>
         </head>
         <body>
-        ${emailSugerido}
+        ${dataText}
+          <img src="${imageUrl}" height="100px">
+         
         </body>
       </html>
     `;
   
     setEmailSugerido(emailHtml);
   };
+  
   
 
   const [tooltipVisible, setTooltipVisible] = useState(false);
@@ -130,11 +137,11 @@ export const Mailing = () => {
   ];
 
   return (
-    <div className="hero min-h-screen w-screen">
+    <div className="hero h-screen w-screen">
   <div className="hero-content w-screen h-screen flex flex-row justify-start items-start">
-    <div className="w-full h-1/2 p-2" style={{ width: "50%" }}>
+    <div className="w-full h-screen" style={{ width: "50%" }}>
       <div className="flex flex-col h-full bg-white border-4 border-black rounded-lg p-4 shadow-xl">
-        <h3 className="mb-2"><span className="font-bold">Input: </span>Write your prompt</h3>
+        <h3 className="mb-2"><span className="font-bold">Input: </span>Write something related with your post</h3>
         <textarea
           className={`text-lg md:text-xl textarea h-auto resize-none ${isLoading && "opacity-50"}`}
           placeholder="e.g.: Write an email with the excuse that I can't attend tomorrow's meeting"
@@ -159,13 +166,13 @@ export const Mailing = () => {
 
       </div>
     </div>
-    <div className="w-full h-1/2 p-2" style={{ width: "50%" }}>
+    <div className="w-full  h-screen" style={{ width: "50%" }}>
       <div className="flex flex-col h-full bg-white border-4 border-black rounded-lg p-4 shadow-xl">
-        <h3 className="mb-2"><span className="font-bold">Email edition: </span> You will be able to add images, edit and paste into your email</h3>
+        <h3 className="mb-2"><span className="font-bold">Article edition: </span> You will be able to edit, copy & paste the article</h3>
         {emailSugerido.length > 0 ? (
           <ReactQuill
             ref={quillRef}
-            className={`h-auto ${isLoading && "opacity-50"}`}
+            className={`h-screen ${isLoading && "opacity-50"}`}
             value={emailSugerido}
             onChange={handleEmailSugeridoChange}
             readOnly={isLoading}

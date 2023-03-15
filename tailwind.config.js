@@ -71,7 +71,8 @@ module.exports = {
           
         },
         ".tab-custom:hover": {
-          backgroundColor: '#21E5F2',
+          backgroundColor: '#000000',
+          color: 'white'
         },
         ".tab-custom-active": {
           backgroundColor: '#000000',
@@ -125,7 +126,12 @@ module.exports = {
           border: "none",
           textDecoration: "none",
           
+        },
+        ".selected": {
+          backgroundColor: "none",
+          color: "#21E5F2"
         }
+       
       });
     }
   ],

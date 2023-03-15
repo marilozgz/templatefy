@@ -1,32 +1,23 @@
-import { OpenAIApi, Configuration } from 'openai';
+import { DallEApi } from 'openai';
 
-const configuration = new Configuration({
+const dallEApi = new DallEApi({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const openai = new OpenAIApi(configuration);
-
 export default async function handler(req, res) {
   try {
-    const { prompt, size } = req.body;
+    const { prompt } = req.body;
 
     if (!prompt) {
       throw new Error('No prompt provided.');
     }
 
-    if (!size) {
-      throw new Error('No size provided.');
-    }
-
-    const completion = await openai.createCompletion({
+    const { data: { url } } = await dallEApi.createImage({
       model: 'image-alpha-001',
       prompt,
-      num_images: 1,
-      size,
-      response_format: 'url',
     });
 
-    res.status(200).json({ image_url: completion.data.data[0].url });
+    res.status(200).json({ url });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while processing the request.' });
