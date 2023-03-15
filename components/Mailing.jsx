@@ -2,8 +2,10 @@ import { useState, useRef } from "react";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import ReactQuill from 'react-quill';
+import dynamic from 'next/dynamic'
+const ReactQuill = dynamic(() => import("react-quill"), { ssr: false });
 import 'react-quill/dist/quill.snow.css';
+
 
 const callOpenAITextAPI = async (prompt, n, stop, temperature) => {
   const response = await fetch("/api/openai/text", {
