@@ -2,10 +2,12 @@ import { useState, useRef, useEffect } from "react";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
-import AceEditor from "react-ace";
-import "ace-builds/src-noconflict/mode-html";
-import "ace-builds/src-noconflict/theme-monokai";
+import { useEditor, EditorContent } from '@tiptap/react'
+import StarterKit from '@tiptap/starter-kit'
 
+import Document from "@tiptap/extension-document";
+import Paragraph from "@tiptap/extension-paragraph";
+import Text from "@tiptap/extension-text";
 
 
 export const Mailing = () => {
@@ -29,6 +31,18 @@ export const Mailing = () => {
     setEmailSugerido(event.target.value);
     setHtmlContent(event.target.value);
   };
+  const editor = useEditor({
+    extensions: [
+      StarterKit,Document, Paragraph, Text
+    ],
+    content: emailSugerido,
+    onUpdate() {
+      setEmailSugerido(this.getHTML());
+      setHtmlContent(this.getHTML());
+    },
+
+   
+  })
 
   const getResponseFromOpenAI = async () => {
     setIsLoading(true);
@@ -99,10 +113,11 @@ export const Mailing = () => {
 
     const range = document.createRange();
     range.selectNodeContents(el);
+    if (typeof window !== "undefined") {
     const selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
-
+    }
     document.execCommand("copy");
     document.body.removeChild(el);
 
@@ -113,8 +128,8 @@ export const Mailing = () => {
   };
 
   return (
-    <div className="hero h-screen w-screen">
-      <div className="hero-content w-screen h-screen flex flex-col justify-start mt-4">
+    <div className="hero w-screen">
+      <div className="hero-content w-screen  flex flex-col justify-start mt-4">
         <div className="w-full h-1/1 p-2">
           <div className="flex flex-col h-full bg-white border-4 border-black rounded-lg p-4 shadow-xl">
             <h3 className="mb-2">Write your prompt! you will be able to edit the code and copy paste the preview</h3>
@@ -144,19 +159,11 @@ export const Mailing = () => {
           <div className="w-1/2 p-2">
             <div className="flex flex-col h-full bg-white border-4 border-black rounded-lg p-4 shadow-xl">
               <h3 className="mb-2">Email Code</h3>
-              <AceEditor
-                value={emailSugerido}
-                onChange={(value) => {
-                  setEmailSugerido(value);
-                  setHtmlContent(value);
-                }}
-                mode="html"
-                theme="monokai"
-                name="email-editor"
-                width="100%"
-                height="100%"
-                editorProps={{ $blockScrolling: true }}
-              />
+              <EditorContent
+            editor={editor}
+            className="h-full w-full overflow-y-auto"
+            attributes={{ style: "min-height: 400px;" }}
+          />
 
 
             </div>

@@ -20,6 +20,7 @@ export const Modal = ({ onClose }) => {
 
   useEffect(() => {
     const handleResize = () => {
+      if (typeof window !== "undefined") {
       if (window.innerWidth < 640) { // Check if device width is less than 640px (mobile devices)
         const screenHeight = window.innerHeight;
         setModalHeight(`${screenHeight * 0.9}px`); // Set modal height to 90% of screen height
@@ -27,7 +28,10 @@ export const Modal = ({ onClose }) => {
         setModalHeight("auto"); // Set modal height to auto for larger devices
       }
     };
+  }
+    if (typeof window !== "undefined") {
     window.addEventListener("resize", handleResize);
+  }
     return () => {
       window.removeEventListener("resize", handleResize);
     };

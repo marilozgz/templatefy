@@ -18,7 +18,9 @@ export default function Home() {
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+    if (typeof window !== "undefined") {
     window.sessionStorage.setItem('activeTab', tab);
+    }
   };
 
   useEffect(() => {

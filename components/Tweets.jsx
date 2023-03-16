@@ -66,13 +66,13 @@ export const Tweets = () => {
   };
   
   return (
-    <div className="hero min-h-screen w-screen">
-      <div className="hero-content w-screen h-screen flex flex-row justify-start items-start">
+    <div className="hero h-1/2 w-screen">
+      <div className="hero-content w-screen   flex flex-row justify-start items-start">
         <div className="w-full h-1/2 p-2" style={{ width: "50%" }}>
-          <div className="flex flex-col h-full bg-white border-4 border-black rounded-lg p-4 shadow-xl">
+          <div className="flex flex-col h-1/2 bg-white border-4 border-black rounded-lg p-4 shadow-xl">
             <h3 className="mb-2"><span className="font-bold">Write your prompt 👇</span></h3>
             <textarea
-              className={`text-lg md:text-xl textarea h-full resize-none ${isLoading && "opacity-50"}`}
+              className={`text-lg md:text-xl textarea h-80 resize-none ${isLoading && "opacity-50"}`}
               placeholder="e.g.: Write a tweet with a witty comment about the weather"
               value={texto}
               onChange={handleTextoChange}
@@ -115,7 +115,7 @@ export const Tweets = () => {
             </div>
             </div>
           </div>
-          <div className="w-full h-1/2 p-2" style={{ width: "50%" }}>
+          <div className="w-full h-96  p-2" style={{ width: "50%" }}>
             <div className="flex flex-col h-full bg-white border-4 border-black rounded-lg p-4 shadow-xl">
             <h3 className="mb-2"><span className="font-bold">Suggestion</span></h3>
               {tweetSugerido.length > 0 ? (
@@ -126,7 +126,7 @@ export const Tweets = () => {
                 />
                 
               ) : (
-                <div className="h-screen flex items-center justify-center">
+                <div className=" flex items-center justify-center">
                   <img src="/images/tweet_1x.webp" alt="No tweet to edit" />
                 </div>
               )}

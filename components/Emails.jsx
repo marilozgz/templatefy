@@ -65,11 +65,11 @@ const handleTextoChange = (event) => {
   
     const range = document.createRange();
     range.selectNodeContents(el);
-  
+    if (typeof window !== "undefined") {
     const selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
-  
+    }
     document.execCommand("copy");
     document.body.removeChild(el);
   
