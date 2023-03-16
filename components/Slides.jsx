@@ -1,102 +1,151 @@
-import { useState, useEffect } from 'react';
+import { useState } from "react";
+import { faCopy } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+
+const callOpenAITextAPI = async (prompt, type, n, stop, temperature) => {
+  const response = await fetch("/api/openai/text", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      prompt: prompt,
+      type: type,
+      max_tokens: type === "slides" ? 2048 : 280,
+      n: n,
+      stop: stop,
+      temperature: temperature,
+    }),
+  });
+
+  const data = await response.json();
+  return type === "slides" ? data.url : data.text;
+};
 
 export const Slides = () => {
-  const [error, setError] = useState(false);
-  const [texto, setTexto] = useState('');
-  const [reset, setReset] = useState(false);
+  const [texto, setTexto] = useState("");
+  const [slidesUrl, setSlidesUrl] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const n = 1;
+  const stop = "";
+  const temperature = 0.7;
+
+  const [isTextareaEmpty, setIsTextareaEmpty] = useState(false);
 
   const handleTextoChange = (event) => {
-    const texto = event.target.value;
-    if (texto.length > 300) {
-      return;
-    }
-    setTexto(texto);
-    if (texto.trim() !== '') {
-      setError(false);
-    }
+    setTexto(event.target.value);
+    setIsTextareaEmpty(event.target.value === "");
   };
 
-  const handleGenerarClick = () => {
-    if (texto.trim() === '') {
-      setError(true);
-    } else {
-      setError(false);
-      // Aquí iría la lógica para generar el texto con AI
-    }
+  const getResponseFromOpenAI = async (type) => {
+    setIsLoading(true);
+    const prompt = `Create a ${type} based on the input text '${texto}'. Ensure the content is within the character limit.`;
+
+    const data = await callOpenAITextAPI(prompt, type, n, stop, temperature);
+    setSlidesUrl(type === "slides" ? data : "");
+    setIsLoading(false);
   };
 
   const handleResetClick = () => {
-    setTexto('');
-    setReset(!reset);
+    setTexto("");
+    setSlidesUrl("");
+  };
+
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+
+  const handleCopyClick = () => {
+    const textarea = document.querySelector("textarea");
+    textarea.select();
+    document.execCommand("copy");
+    setTooltipVisible(true);
+    setTimeout(() => setTooltipVisible(false), 1000);
   };
 
   return (
-    <div className="hero h-auto justify-left flex-col mt-20">
-      <div className="hero-content flex-col-reverse w-screen lg:flex-row-reverse h-fit">
-        <div className="flex-0 h-auto lg:h-96 w-full lg:w-1/2 mx-auto relative flex items-center">
-          <div className="relative w-full">
+    <div className="hero min-h-screen w-screen">
+      <div className="hero-content w-screen h-screen flex flex-row justify-start items-start">
+        <div className="w-full h-1/2 p-2" style={{ width: "50%" }}>
+          <div className="flex flex-col h-full bg-white border-4 border-black rounded-lg p-4 shadow-xl">
+            <h3 className="mb-2">
+              <span className="font-bold">Write your prompt 👇</span>
+            </h3>
             <textarea
-              className="text-l md:text-xl textarea textarea-ghost h-56 sm:h-80 w-full border-8 border-black rounded-lg p-6 shadow-xl resize-none bg-white"
-              placeholder="ex: Give me a presentation slides about the mating season of mussels in the north of Spain, in Spanish"
+              className={`text-lg md:text-xl textarea h-full resize-none ${isLoading && "opacity-50"
+                }`}
+              placeholder="e.g.: Write a presentation about the benefits of meditation"
               value={texto}
               onChange={handleTextoChange}
-              key={reset}
-              style={{ outlineColor: '#21E5F2' }}
+              onBlur={(e) => setIsTextareaEmpty(e.target.value === "")}
+              onFocus={() => setIsTextareaEmpty(false)}
             />
-
-            <div className="absolute bottom-0 right-0 flex items-center mr-6 mb-6">
-              <p className={`text-${300 - texto.length > 20 ? 'gray-700' : 'red-500'}`}>
-                {300 - texto.length}
-              </p>
-              <span className="text-gray-500">/300</span>
+            <div className="btn-container flex align-center">
               <button
-                className="text-cyan-500 hover:underline ml-3"
-                onClick={handleResetClick}
+                className="btn btn-primary text-sm mt-5 self-start"
+                onClick={() => {
+                  setIsLoading(true);
+                  getResponseFromOpenAI("slides").finally(() =>
+                    setIsLoading(false)
+                  );
+                }}
+                disabled={!texto}
+                style={{ display: !texto ? "none" : "block" }}
               >
-                Reset
+
+                {isLoading ? (
+                  <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+                ) : (
+                  " Generate slides"
+                )}
               </button>
             </div>
           </div>
-          <button
-            className="btn btn-secondary rounded-full text-sm absolute bottom-14 left-1/2 transform -translate-x-1/2"
-            onClick={handleGenerarClick}
-          >
-            Generate!
-          </button>
-
-          {error && (
-            <p className="bg-red-100 text-red-800 p-2 rounded-md absolute bottom-17 left-0 ml-6 mb-2">
-              👆 Please, prompt something.
-            </p>
-          )}
-          
         </div>
-        <div className="flex-auto w-full lg:w-1/2">
-          <div className="flex flex-col justify-center h-full">
-            <h1 className="text-5xl lg:text-5xl font-normal text-left">Generate a</h1>
-            <h1 id="texto" className="text-4xl lg:text-7xl font-extrabold w-120 text-left">
-              _Presentation
-            </h1>
-           
-            <div>
-              <h2 className="text-2xl font-normal mt-6 text-left pt-5">
-                Write your <span className="inline-flex items-center px-3.5 py-0.5 rounded-full text-2xs font-medium bg-green-500 text-white">
-                Prompt
-              </span> 👉
-              </h2>
-              <div className="mt-2 flex items-center">
-              <span className="text-3xl mr-2 flex items-center pt-">
-                <p>🎉</p>
-                <p>🎉</p>
-                <p>🎉</p>
-              </span>
+        <div className="w-full h-1/2 p-2" style={{ width: "50%" }}>
+          <div className="flex flex-col h-full bg-white border-4 border-black rounded-lg p-4 shadow-xl">
+            <h3 className="mb-2">
+              <span className="font-bold">Suggestion</span>
+            </h3>
+            {slidesUrl ? (
+              <div className="h-full flex items-center justify-center">
+                <iframe
+                  src={slidesUrl}
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  allowFullScreen
+                />
+              </div>
+            ) : (
+              <div className="h-full flex items-center justify-center">
+                <img src="/images/slides_1x.webp" alt="No slides to show" />
+              </div>
+            )}
+            <div className="flex mt-12">
+              {slidesUrl && (
+                <div className="ml-auto relative">
+                  <button
+                    className="btn btn-link text-sm"
+                    disabled={isLoading || !texto}
+                    onClick={handleCopyClick}
+                  >
+                    <FontAwesomeIcon icon={faCopy} className="mr-2" />
+                    Copy
+                  </button>
+                  <div
+                    className={`absolute left-0 bottom-full mb-2 p-2 rounded-md bg-gray-700 text-white ${tooltipVisible ? "opacity-100" : "opacity-0"
+                      } transition-opacity duration-500 ease-in-out`}
+                    style={{ zIndex: 999 }}
+                  >
+                    Copied!
+                  </div>
+                </div>
+              )}
             </div>
-            </div>
-
           </div>
         </div>
       </div>
     </div>
   );
 };
-
