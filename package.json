@@ -16,6 +16,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.3.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@next/font": "13.1.6",
+    "@stripe/stripe-js": "^1.49.0",
     "@tiptap/extension-document": "^2.0.0-beta.220",
     "@tiptap/extension-paragraph": "^2.0.0-beta.220",
     "@tiptap/extension-text": "^2.0.0-beta.220",
@@ -36,7 +37,8 @@
     "react-daisyui": "^3.0.3",
     "react-dom": "18.2.0",
     "react-quill": "^2.0.0",
-    "react-resizable": "^3.0.4"
+    "react-resizable": "^3.0.4",
+    "stripe": "^11.14.0"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
