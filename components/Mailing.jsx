@@ -112,9 +112,6 @@ export const Mailing = () => {
     }, 1000);
   };
 
-
-
-
   return (
     <div className="hero h-screen w-screen">
       <div className="hero-content w-screen h-screen flex flex-col justify-start mt-4">

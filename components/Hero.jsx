@@ -41,7 +41,7 @@ export const Hero = () => {
            
             <div>
               <h2 className="text-2xl font-normal mt-6 text-left pt-5">
-                Use it. It's  <span className="inline-flex items-center px-3.5 py-0.5 rounded-full text-2xs font-medium bg-green-500 text-white">
+                Use it. It&apos;s  <span className="inline-flex items-center px-3.5 py-0.5 rounded-full text-2xs font-medium bg-green-500 text-white">
                 Free
               </span> 👉
               </h2>

@@ -1,0 +1,12 @@
+{
+    "functions": {
+      "pages/api/opeain/text.js": {
+        "memory": 1024,
+        "maxDuration": 60
+      },
+      "pages/api/opeain/image.js": {
+        "memory": 1024,
+        "maxDuration": 60
+      }
+    }
+  }
