@@ -2,6 +2,7 @@ import { useState } from "react";
 import { faCopy } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import Image from "next/image";
 
 const callOpenAITextAPI = async (prompt, n, stop, temperature) => {
   const response = await fetch("/api/openai/text", {
@@ -33,10 +34,10 @@ export const Emails = () => {
 
   const [isTextareaEmpty, setIsTextareaEmpty] = useState(false);
 
-const handleTextoChange = (event) => {
-  setTexto(event.target.value);
-  setIsTextareaEmpty(event.target.value === "");
-};
+  const handleTextoChange = (event) => {
+    setTexto(event.target.value);
+    setIsTextareaEmpty(event.target.value === "");
+  };
 
   const handleEmailSugeridoChange = (event) => {
     setEmailSugerido(event.target.value);
@@ -49,12 +50,17 @@ const handleTextoChange = (event) => {
       The email must be with structure (spaces). 
       Ensure there are no extra spaces at the top of the email.
     `;
-  
+
     const dataText = await callOpenAITextAPI(prompt, n, stop, temperature);
-    setEmailSugerido(dataText);
+    
+    if (dataText === "" || dataText === null) {
+      setEmailSugerido(null);
+    } else {
+      setEmailSugerido(dataText);
+    }
+
     setIsLoading(false);
   };
-  
 
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
@@ -62,37 +68,40 @@ const handleTextoChange = (event) => {
     const el = document.createElement("div");
     el.innerHTML = emailSugerido;
     document.body.appendChild(el);
-  
+
     const range = document.createRange();
     range.selectNodeContents(el);
     if (typeof window !== "undefined") {
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
     }
     document.execCommand("copy");
     document.body.removeChild(el);
-  
+
     setTooltipVisible(true);
     setTimeout(() => {
       setTooltipVisible(false);
     }, 2000);
   };
-  
 
   const handleResetClick = () => {
     setTexto("");
     setEmailSugerido("");
   };
-  
+
   return (
-    <div className="hero min-h-screen w-screen">
-      <div className="hero-content w-screen h-screen flex flex-row justify-start items-start">
-        <div className="w-full h-1/2 p-2" style={{ width: "50%" }}>
-          <div className="flex flex-col h-full bg-white border-4 border-black rounded-lg p-4 shadow-xl">
-            <h3 className="mb-2"><span className="font-bold">Write your prompt 👇</span></h3>
+    <div className="hero h-1/2 w-screen">
+      <div className="hero-content w-screen flex flex-row justify-start items-start">
+        <div className="w-1/2 h-96 p-2" >
+          <div className="flex flex-col h-96 bg-white border-4 border-black rounded-lg p-4 shadow-xl">
+            <h3 className="mb-2">
+              <span className="font-bold">Write your prompt 👇</span>
+            </h3>
             <textarea
-              className={`text-lg md:text-xl textarea h-full resize-none ${isLoading && "opacity-50"}`}
+              className={`text-lg md:text-xl textarea  resize-none ${
+                isLoading && "opacity-50"
+              }`}
               placeholder="e.g.: Write an email with the excuse that I can't attend tomorrow's meeting"
               value={texto}
               onChange={handleTextoChange}
@@ -114,22 +123,29 @@ const handleTextoChange = (event) => {
           </div>
         </div>
         <div className="w-full h-1/2 p-2" style={{ width: "50%" }}>
-          <div className="flex flex-col h-full bg-white border-4 border-black rounded-lg p-4 shadow-xl">
-          <h3 className="mb-2"><span className="font-bold">Suggestion</span></h3>
-            {emailSugerido.length > 0 ? (
+          <div className="flex flex-col  bg-white border-4 border-black rounded-lg p-4 shadow-xl">
+            <h3 className="mb-2">
+              <span className="font-bold">Suggestion</span>
+            </h3>
+            {emailSugerido ? (
               <textarea
-                className={`h-screen ${isLoading && "opacity-50"}`}
+                className={`h-80 ${isLoading && "opacity-50"}`}
                 value={emailSugerido}
                 onChange={handleEmailSugeridoChange}
                 readOnly={isLoading}
               />
             ) : (
-              <div className="h-screen flex items-center justify-center">
-                <img src="/images/email_1x.webp" alt="No email to edit" />
+              <div className=" flex items-center justify-center">
+                <Image
+                  width={276}
+                  height={200}
+                  src="/images/email_1x.webp"
+                  alt="No email to edit"
+                />
               </div>
             )}
             <div className="flex mt-12">
-              {emailSugerido.length > 0 && !isLoading && (
+              {emailSugerido && !isLoading && (
                 <button
                   className="btn btn-link text-sm"
                   onClick={handleResetClick}
@@ -137,7 +153,7 @@ const handleTextoChange = (event) => {
                   Reset all
                 </button>
               )}
-              {emailSugerido.length > 0 && (
+              {emailSugerido  && (
                 <div className="ml-auto relative">
                   <button
                     className="btn btn-link text-sm"
@@ -163,5 +179,4 @@ const handleTextoChange = (event) => {
       </div>
     </div>
   );
-  
-   };  
+};
